@@ -1,0 +1,24 @@
+import os
+import time
+
+filename = "sample.txt"
+
+# Create file if it doesn't exist
+with open(filename, "a") as f:
+    f.write("Original Data\n")
+
+print("Before Modification")
+print("Created :", time.ctime(os.path.getctime(filename)))
+print("Modified:", time.ctime(os.path.getmtime(filename)))
+print("Accessed:", time.ctime(os.path.getatime(filename)))
+
+input("\nPress Enter to modify the file...")
+
+# Modify file
+with open(filename, "a") as f:
+    f.write("Evidence Modified\n")
+
+print("\nAfter Modification")
+print("Created :", time.ctime(os.path.getctime(filename)))
+print("Modified:", time.ctime(os.path.getmtime(filename)))
+print("Accessed:", time.ctime(os.path.getatime(filename)))
