@@ -1,0 +1,214 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMzMCf4Q1u3hcz7sZx4CQWT",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/varshitha2213/CSA61-DIGITAL-FORENSICS-AND-CYBER-CRIME-INVESTIGATION/blob/main/exp%202%20(unit%203)\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [],
+      "metadata": {
+        "id": "9BlMf-VJIOjR"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Experiment 1: Digital Evidence Collection & Cataloguing"
+      ],
+      "metadata": {
+        "id": "ZKlaKpb0I8Hk"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "JoPG1YT-H2BN",
+        "outputId": "e68889c8-d594-4162-8264-e205acf2db35"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "DIGITAL EVIDENCE CATALOG\n",
+            "----------------------------------------------------------------------\n",
+            "File Name            Size(Bytes)  MD5 Hash                        \n",
+            "----------------------------------------------------------------------\n",
+            "emails.txt           24           5b6cd2278ef0b84c15197627d8da3adf\n",
+            "browser_history.txt  45           8ee6339f5d7808132800ad4e8b505c85\n",
+            "chat_logs.txt        22           949d16e2e1a9e4adb5ab1ebf069e79d0\n",
+            "system_logs.txt      28           4f1ed66c1977e71b7400aa67bc244d12\n"
+          ]
+        }
+      ],
+      "source": [
+        "import hashlib\n",
+        "import os\n",
+        "\n",
+        "# Sample digital evidence files\n",
+        "evidence_files = [\n",
+        "    \"emails.txt\",\n",
+        "    \"browser_history.txt\",\n",
+        "    \"chat_logs.txt\",\n",
+        "    \"system_logs.txt\"\n",
+        "]\n",
+        "\n",
+        "# Create sample files\n",
+        "sample_data = {\n",
+        "    \"emails.txt\": \"Email from Alice to Bob.\",\n",
+        "    \"browser_history.txt\": \"https://www.google.com\\nhttps://www.github.com\",\n",
+        "    \"chat_logs.txt\": \"User1: Hello\\nUser2: Hi\",\n",
+        "    \"system_logs.txt\": \"System started successfully.\"\n",
+        "}\n",
+        "\n",
+        "for file, content in sample_data.items():\n",
+        "    with open(file, \"w\") as f:\n",
+        "        f.write(content)\n",
+        "\n",
+        "print(\"DIGITAL EVIDENCE CATALOG\")\n",
+        "print(\"-\" * 70)\n",
+        "print(\"{:<20} {:<12} {:<32}\".format(\"File Name\", \"Size(Bytes)\", \"MD5 Hash\"))\n",
+        "print(\"-\" * 70)\n",
+        "\n",
+        "# Calculate size and MD5 hash\n",
+        "for file in evidence_files:\n",
+        "    size = os.path.getsize(file)\n",
+        "\n",
+        "    with open(file, \"rb\") as f:\n",
+        "        data = f.read()\n",
+        "        md5_hash = hashlib.md5(data).hexdigest()\n",
+        "\n",
+        "    print(\"{:<20} {:<12} {:<32}\".format(file, size, md5_hash))"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Experiment 2: Volatile vs Non-Volatile Evidence Capture"
+      ],
+      "metadata": {
+        "id": "V8o276tRJshO"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import hashlib\n",
+        "import os\n",
+        "\n",
+        "# -------------------------------\n",
+        "# Volatile Evidence (Simulated)\n",
+        "# -------------------------------\n",
+        "print(\"VOLATILE EVIDENCE\")\n",
+        "print(\"----------------------------\")\n",
+        "\n",
+        "running_processes = [\n",
+        "    \"chrome.exe\",\n",
+        "    \"python.exe\",\n",
+        "    \"explorer.exe\",\n",
+        "    \"notepad.exe\"\n",
+        "]\n",
+        "\n",
+        "print(\"Running Processes:\")\n",
+        "for process in running_processes:\n",
+        "    print(process)\n",
+        "\n",
+        "print(\"\\n(Note: Volatile evidence is lost after system shutdown.)\")\n",
+        "\n",
+        "# -------------------------------\n",
+        "# Non-Volatile Evidence\n",
+        "# -------------------------------\n",
+        "print(\"\\nNON-VOLATILE EVIDENCE\")\n",
+        "print(\"----------------------------\")\n",
+        "\n",
+        "filename = \"evidence.txt\"\n",
+        "\n",
+        "# Create a sample file\n",
+        "with open(filename, \"w\") as file:\n",
+        "    file.write(\"This is non-volatile digital evidence.\")\n",
+        "\n",
+        "# Function to calculate MD5 hash\n",
+        "def md5_hash(file_name):\n",
+        "    with open(file_name, \"rb\") as file:\n",
+        "        data = file.read()\n",
+        "        return hashlib.md5(data).hexdigest()\n",
+        "\n",
+        "# Read the file twice\n",
+        "hash1 = md5_hash(filename)\n",
+        "hash2 = md5_hash(filename)\n",
+        "\n",
+        "print(\"File Name :\", filename)\n",
+        "print(\"File Size :\", os.path.getsize(filename), \"bytes\")\n",
+        "print(\"First MD5 :\", hash1)\n",
+        "print(\"Second MD5:\", hash2)\n",
+        "\n",
+        "# Check integrity\n",
+        "if hash1 == hash2:\n",
+        "    print(\"\\nResult: Non-volatile evidence remains identical when re-read.\")\n",
+        "else:\n",
+        "    print(\"\\nResult: File has been modified.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8CozM3t3JxKI",
+        "outputId": "92968beb-b2ce-431d-cd72-e830d51fcfd8"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "VOLATILE EVIDENCE\n",
+            "----------------------------\n",
+            "Running Processes:\n",
+            "chrome.exe\n",
+            "python.exe\n",
+            "explorer.exe\n",
+            "notepad.exe\n",
+            "\n",
+            "(Note: Volatile evidence is lost after system shutdown.)\n",
+            "\n",
+            "NON-VOLATILE EVIDENCE\n",
+            "----------------------------\n",
+            "File Name : evidence.txt\n",
+            "File Size : 38 bytes\n",
+            "First MD5 : 705ea5ccfec11b39b4ae772f82b121de\n",
+            "Second MD5: 705ea5ccfec11b39b4ae772f82b121de\n",
+            "\n",
+            "Result: Non-volatile evidence remains identical when re-read.\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
